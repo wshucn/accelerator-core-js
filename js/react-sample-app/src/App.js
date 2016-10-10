@@ -52,6 +52,7 @@ const otCoreOptions = {
   },
 };
 
+// 'video' => 'Video'
 const properCase = text => `${text[0].toUpperCase()}${text.slice(1)}`;
 
 const connectingMask = () =>
@@ -65,6 +66,10 @@ const startCallMask = start =>
     <div className="message button clickable" onClick={start}>Click to Start Call</div>
   </div>;
 
+/**
+ * Build classes for UI components based on state
+ * @param {Object} state
+ */
 const containerClasses = (state) => {
   const { active, meta, localAudioEnabled, localVideoEnabled } = state;
   const sharingScreen = meta ? !!meta.publisher.screen : false;
@@ -83,6 +88,10 @@ const containerClasses = (state) => {
   };
 };
 
+/**
+ * Add enable audio/video controls to subscriber video container
+ * @param {Object} subscriber
+ */
 const addSubscriberControls = ({ id }) => {
   const container = document.getElementById(id);
   const controls =
