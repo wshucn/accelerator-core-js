@@ -43,6 +43,8 @@ const options = {
   },
 };
 
+const properCase = text => `${text[0].toUpperCase()}${text.slice(1)}`;
+
 const app = () => {
   const state = {
     connected: false,
@@ -98,6 +100,23 @@ const app = () => {
     }
   };
 
+  const addSubscriberControls = ({ id }) => {
+    const container = document.getElementById(id);
+    const controls =
+      `<div class="App-subscriber-controls">
+        <div class="subscriber-control audio" id="audio-${id}"></div>
+        <div class="subscriber-control video" id="video-${id}"></div>
+      </div>`;
+    container.insertAdjacentHTML('afterBegin', controls);
+    const toggle = ({ target }) => {
+      const enabled = !target.classList.contains('muted');
+      otCore[`toggleRemote${properCase(target.id.split('-')[0])}`](id, !enabled);
+      target.classList[enabled ? 'add' : 'remove']('muted');
+    };
+    document.getElementById(`audio-${id}`).addEventListener('click', toggle)
+    document.getElementById(`video-${id}`).addEventListener('click', toggle);
+  };
+
   const updateState = (updates) => {
     Object.assign(state, updates);
     Object.keys(updates).forEach(update => updateUI(update));
@@ -136,8 +155,12 @@ const app = () => {
       'startScreenShare',
       'endScreenShare',
     ];
-    events.forEach(event => otCore.on(event, ({ publishers, subscribers, meta }) => {
+    events.forEach(event => otCore.on(event, (data) => {
+      const { subscriber, publishers, subscribers, meta } = data;
       updateState({ publishers, subscribers, meta });
+      if (event === 'subscribeToCamera') {
+        addSubscriberControls(subscriber);
+      }
     }));
 
     document.getElementById('start').addEventListener('click', startCall);

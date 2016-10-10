@@ -92,6 +92,43 @@ body {
     background-image: url(https://assets.tokbox.com/solutions/images/icon-no-video.png);
 }
 
+.App-subscriber-controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.App-subscriber-controls .subscriber-control {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-color: rgba(0,0,0,.3);
+    background-position: center;
+    border-radius: 50%;
+    z-index: 2;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.App-subscriber-controls .subscriber-control.audio {
+    background-image: url(https://assets.tokbox.com/solutions/images/icon-audio.png);
+}
+
+.App-subscriber-controls .subscriber-control.audio.muted {
+    background-image: url(https://assets.tokbox.com/solutions/images/icon-no-audio.png);
+}
+
+.App-subscriber-controls .subscriber-control.video {
+    background-image: url(https://assets.tokbox.com/solutions/images/icon-video.png);
+}
+
+.App-subscriber-controls .subscriber-control.video.muted {
+    background-image: url(https://assets.tokbox.com/solutions/images/icon-no-video.png);
+}
+
+
 .App-video-container {
     position: relative;
     width: 100%;
