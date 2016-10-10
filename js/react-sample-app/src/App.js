@@ -52,6 +52,8 @@ const otCoreOptions = {
   },
 };
 
+const properCase = text => `${text[0].toUpperCase()}${text.slice(1)}`;
+
 const connectingMask = () =>
   <div className="App-mask">
     <Spinner />
@@ -79,6 +81,23 @@ const containerClasses = (state) => {
     ),
     screenSubscriberClass: classNames('video-container', { 'hidden': !viewingSharedScreen }),
   };
+};
+
+const addSubscriberControls = ({ id }) => {
+  const container = document.getElementById(id);
+  const controls =
+    `<div class="App-subscriber-controls">
+      <div class="subscriber-control audio" id="audio-${id}"></div>
+      <div class="subscriber-control video" id="video-${id}"></div>
+    </div>`
+  container.insertAdjacentHTML('afterBegin', controls);
+  const toggle = ({ target }) => {
+    const enabled = !target.classList.contains('muted');
+    otCore[`toggleRemote${properCase(target.id.split('-')[0])}`](id, !enabled);
+    target.classList[enabled ? 'add' : 'remove']('muted');
+  };
+  document.getElementById(`audio-${id}`).addEventListener('click', toggle)
+  document.getElementById(`video-${id}`).addEventListener('click', toggle);
 };
 
 class App extends Component {
@@ -110,8 +129,11 @@ class App extends Component {
       'endScreenShare',
     ];
 
-    events.forEach(event => otCore.on(event, ({ publishers, subscribers, meta }) => {
-      this.setState({ publishers, subscribers, meta });
+    events.forEach(event => otCore.on(event, (data) => {
+      const { subscriber, publishers, subscribers, meta } = data;
+      this.setState({ publishers, subscribers, meta }, () => {
+        event === 'subscribeToCamera' && addSubscriberControls(subscriber);
+      });
     }));
   }
 
