@@ -108,13 +108,13 @@ const app = () => {
         <div class="subscriber-control video" id="video-${id}"></div>
       </div>`;
     container.insertAdjacentHTML('afterBegin', controls);
-    const toggle = ({ target }) => {
+    const toggleRemoteAV = ({ target }) => {
       const enabled = !target.classList.contains('muted');
       otCore[`toggleRemote${properCase(target.id.split('-')[0])}`](id, !enabled);
       target.classList[enabled ? 'add' : 'remove']('muted');
     };
-    document.getElementById(`audio-${id}`).addEventListener('click', toggle)
-    document.getElementById(`video-${id}`).addEventListener('click', toggle);
+    document.getElementById(`audio-${id}`).addEventListener('click', toggleRemoteAV)
+    document.getElementById(`video-${id}`).addEventListener('click', toggleRemoteAV);
   };
 
   const updateState = (updates) => {
