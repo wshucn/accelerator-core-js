@@ -62,23 +62,25 @@ class Communication {
       return true;
     }
     // Not using the session here since we're concerned with number of active publishers
+    // TODO: maybe `s.videoType === 'camera'` need to be updated
     const connections = Object.values(state.getStreams()).filter(s => s.videoType === 'camera');
     return connections.length < connectionLimit;
   };
 
   /**
-   * Create a camera publisher object
+   * Create a publisher object
+   * @param {string} source
    * @param {Object} publisherProperties
    * @returns {Promise} <resolve: Object, reject: Error>
    */
-  createPublisher = (publisherProperties) => {
+  createPublisher = (source, publisherProperties) => {
     const { callProperties, streamContainers } = this;
     return new Promise((resolve, reject) => {
       // TODO: Handle adding 'name' option to props
       const props = Object.assign({}, callProperties, publisherProperties);
       // TODO: Figure out how to handle common vs package-specific options
       // ^^^ This may already be available through package options
-      const container = dom.element(streamContainers('publisher', 'camera'));
+      const container = dom.element(streamContainers('publisher', source));
       const publisher = OT.initPublisher(container, props, (error) => {
         error ? reject(error) : resolve(publisher);
       });
@@ -86,11 +88,12 @@ class Communication {
   }
 
   /**
-   * Publish the local camera stream and update state
+   * Publish the local stream from source and update state
+   * @param {string} source
    * @param {Object} publisherProperties
    * @returns {Promise} <resolve: empty, reject: Error>
    */
-  publish = (publisherProperties) => {
+  publish = (source, publisherProperties) => {
     const { analytics, state, createPublisher, session, triggerEvent, subscribeOnly } = this;
 
     /**
@@ -108,7 +111,7 @@ class Communication {
           analytics.log(logAction.startCall, logVariation.fail);
         } else {
           analytics.log(logAction.startCall, logVariation.success);
-          state.addPublisher('camera', publisher);
+          state.addPublisher(source, publisher);
           resolve(publisher);
         }
       };
@@ -122,7 +125,7 @@ class Communication {
         reject(error);
       };
 
-      createPublisher(publisherProperties)
+      createPublisher(source, publisherProperties)
         .then(publishToSession)
         .catch(handleError);
     });
@@ -157,7 +160,7 @@ class Communication {
         const container = dom.element(streamContainers('subscriber', type, connectionData, stream));
         const options = Object.assign(
           {},
-          type === 'camera' || type === 'sip' ? callProperties : screenProperties,
+          type === 'camera' || type === 'media' || type === 'sip' ? callProperties : screenProperties,
           subscriberProperties,
         );
         const subscriber = session.subscribe(stream, container, options, (error) => {
@@ -229,14 +232,15 @@ class Communication {
 
   /**
    * Start publishing the local camera feed and subscribing to streams in the session
+   * @param {string} source
    * @param {Object} publisherProperties
    * @returns {Promise} <resolve: Object, reject: Error>
    */
-  startCall = (publisherProperties) => {
+  startCall = (source, publisherProperties) => {
     const { analytics, state, subscribe, ableToJoin, triggerEvent, autoSubscribe, publish } = this;
     return new Promise((resolve, reject) => { // eslint-disable-line consistent-return
       analytics.log(logAction.startCall, logVariation.attempt);
-      
+
       this.active = true;
       const initialStreamIds = Object.keys(state.getStreams());
 
@@ -282,7 +286,7 @@ class Communication {
           .catch(onError);
       };
 
-      publish(publisherProperties)
+      publish(source, publisherProperties)
         .then(subscribeToInitialStreams)
         .catch(reject);
     });

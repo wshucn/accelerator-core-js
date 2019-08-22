@@ -5,12 +5,14 @@ class State {
     this.publishers = {
       camera: {},
       screen: {},
+      media: {},
     };
 
     // Map subscriber id to subscriber objects
     this.subscribers = {
       camera: {},
       screen: {},
+      media: {},
       sip: {},
     };
 
