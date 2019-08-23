@@ -2,6 +2,5 @@
 ./test/coverage
 node_modules
 npm-debug.log
-dist
 browser
 .idea/
