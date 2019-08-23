@@ -108,7 +108,8 @@ class Communication {
           analytics.log(logAction.startCall, logVariation.fail);
         } else {
           analytics.log(logAction.startCall, logVariation.success);
-          state.addPublisher('camera', publisher);
+          // state.addPublisher('camera', publisher);
+          state.addPublisher('custom', publisher);
           resolve(publisher);
         }
       };
@@ -236,7 +237,7 @@ class Communication {
     const { analytics, state, subscribe, ableToJoin, triggerEvent, autoSubscribe, publish } = this;
     return new Promise((resolve, reject) => { // eslint-disable-line consistent-return
       analytics.log(logAction.startCall, logVariation.attempt);
-      
+
       this.active = true;
       const initialStreamIds = Object.keys(state.getStreams());
 
