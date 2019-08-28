@@ -177,6 +177,7 @@ var AccCore = function AccCore(options) {
 
 /**
  * Start publishing video and subscribing to streams
+ * @param {string} source
  * @param {Object} publisherProps - https://goo.gl/0mL0Eo
  * @returns {Promise} <resolve: State + Publisher, reject: Error>
  */
@@ -758,8 +759,8 @@ var _initialiseProps = function _initialiseProps() {
   Object.defineProperty(this, 'startCall', {
     enumerable: true,
     writable: true,
-    value: function value(publisherProps) {
-      return _this.communication.startCall(publisherProps);
+    value: function value(source, publisherProps) {
+      return _this.communication.startCall(source, publisherProps);
     }
   });
   Object.defineProperty(this, 'endCall', {
