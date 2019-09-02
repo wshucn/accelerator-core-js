@@ -58,13 +58,13 @@ class State {
       acc[source] = Object.keys(publishers[source]).length;
       acc.total += acc[source];
       return acc;
-    }, { camera: 0, screen: 0, total: 0 });
+    }, { camera: 0, screen: 0, media: 0, total: 0 });
 
     const subs = Object.keys(subscribers).reduce((acc, source) => {
       acc[source] = Object.keys(subscribers[source]).length;
       acc.total += acc[source];
       return acc;
-    }, { camera: 0, screen: 0, sip: 0, total: 0 });
+    }, { camera: 0, screen: 0, media: 0, sip: 0, total: 0 });
     /* eslint-enable no-param-reassign */
     return { publisher: pubs, subscriber: subs };
   }
@@ -203,7 +203,8 @@ class State {
   addSubscriber = (subscriber) => {
     const { subscribers, streamMap } = this;
     const streamId = subscriber.stream.id;
-    const type = pathOr('sip', 'stream.videoType', subscriber);
+    let type = pathOr('sip', 'stream.videoType', subscriber);
+    type = type === 'custom' ? 'sip' : type;
     subscribers[type][subscriber.id] = subscriber;
     streamMap[streamId] = subscriber.id;
   }
@@ -224,7 +225,7 @@ class State {
    * Remove all subscribers from state
    */
   removeAllSubscribers = () => {
-    ['camera', 'screen', 'sip'].forEach((type) => {
+    ['camera', 'screen', 'media', 'sip'].forEach((type) => {
       Object.values(this.subscribers[type]).forEach((subscriber) => {
         this.removeSubscriber(type, subscriber);
       });

@@ -26,13 +26,13 @@ var State = function State() {
         acc[source] = Object.keys(publishers[source]).length;
         acc.total += acc[source];
         return acc;
-      }, { camera: 0, screen: 0, total: 0 });
+      }, { camera: 0, screen: 0, media: 0, total: 0 });
 
       var subs = Object.keys(subscribers).reduce(function (acc, source) {
         acc[source] = Object.keys(subscribers[source]).length;
         acc.total += acc[source];
         return acc;
-      }, { camera: 0, screen: 0, sip: 0, total: 0 });
+      }, { camera: 0, screen: 0, media: 0, sip: 0, total: 0 });
       /* eslint-enable no-param-reassign */
       return { publisher: pubs, subscriber: subs };
     }
@@ -180,6 +180,7 @@ var State = function State() {
 
       var streamId = subscriber.stream.id;
       var type = pathOr('sip', 'stream.videoType', subscriber);
+      type = type === 'custom' ? 'sip' : type;
       subscribers[type][subscriber.id] = subscriber;
       streamMap[streamId] = subscriber.id;
     }
@@ -200,7 +201,7 @@ var State = function State() {
     enumerable: true,
     writable: true,
     value: function value() {
-      ['camera', 'screen', 'sip'].forEach(function (type) {
+      ['camera', 'screen', 'media', 'sip'].forEach(function (type) {
         Object.values(_this.subscribers[type]).forEach(function (subscriber) {
           _this.removeSubscriber(type, subscriber);
         });
