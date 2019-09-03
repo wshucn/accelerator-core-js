@@ -192,7 +192,6 @@ var _initialiseProps = function _initialiseProps() {
         return true;
       }
       // Not using the session here since we're concerned with number of active publishers
-      // TODO: maybe `s.videoType === 'camera'` need to be updated
       var connections = Object.values(state.getStreams()).filter(function (s) {
         return s.videoType === 'camera';
       });
@@ -302,7 +301,7 @@ var _initialiseProps = function _initialiseProps() {
             connectionData = path(['connection', 'data'], stream);
           }
           var container = dom.element(streamContainers('subscriber', type, connectionData, stream));
-          var options = Object.assign({}, type === 'camera' || type === 'media' || type === 'sip' ? callProperties : screenProperties, subscriberProperties);
+          var options = Object.assign({}, type === 'camera' || type === 'custom' || type === 'sip' ? callProperties : screenProperties, subscriberProperties);
           var subscriber = session.subscribe(stream, container, options, function (error) {
             if (error) {
               analytics.log(logAction.subscribe, logVariation.fail);

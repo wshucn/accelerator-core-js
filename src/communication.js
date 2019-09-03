@@ -62,7 +62,6 @@ class Communication {
       return true;
     }
     // Not using the session here since we're concerned with number of active publishers
-    // TODO: maybe `s.videoType === 'camera'` need to be updated
     const connections = Object.values(state.getStreams()).filter(s => s.videoType === 'camera');
     return connections.length < connectionLimit;
   };
@@ -160,7 +159,7 @@ class Communication {
         const container = dom.element(streamContainers('subscriber', type, connectionData, stream));
         const options = Object.assign(
           {},
-          type === 'camera' || type === 'media' || type === 'sip' ? callProperties : screenProperties,
+          type === 'camera' || type === 'custom' || type === 'sip' ? callProperties : screenProperties,
           subscriberProperties,
         );
         const subscriber = session.subscribe(stream, container, options, (error) => {

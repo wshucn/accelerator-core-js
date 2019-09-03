@@ -3,7 +3,7 @@
 var events = {
   session: ['archiveStarted', 'archiveStopped', 'connectionCreated', 'connectionDestroyed', 'sessionConnected', 'sessionDisconnected', 'sessionReconnected', 'sessionReconnecting', 'signal', 'streamCreated', 'streamDestroyed', 'streamPropertyChanged'],
   core: ['connected', 'startScreenShare', 'endScreenShare', 'error'],
-  communication: ['startCall', 'endCall', 'callPropertyChanged', 'subscribeToCamera', 'subscribeToScreen', 'subscribeToMedia', 'subscribeToSip', 'unsubscribeFromCamera', 'unsubscribeFromSip', 'unsubscribeFromScreen', 'unsubscribeFromMedia', 'startViewingSharedScreen', 'endViewingSharedScreen'],
+  communication: ['startCall', 'endCall', 'callPropertyChanged', 'subscribeToCamera', 'subscribeToScreen', 'subscribeToCustom', 'subscribeToSip', 'unsubscribeFromCamera', 'unsubscribeFromSip', 'unsubscribeFromScreen', 'unsubscribeFromCustom', 'startViewingSharedScreen', 'endViewingSharedScreen'],
   textChat: ['showTextChat', 'hideTextChat', 'messageSent', 'errorSendingMessage', 'messageReceived'],
   screenSharing: ['startScreenSharing', 'endScreenSharing', 'screenSharingError'],
   annotation: ['startAnnotation', 'linkAnnotation', 'resizeCanvas', 'annotationWindowClosed', 'endAnnotation'],
