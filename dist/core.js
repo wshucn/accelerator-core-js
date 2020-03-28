@@ -915,15 +915,10 @@ var _initialiseProps = function _initialiseProps() {
       analytics.log(logAction.toggleRemoteVideo, logVariation.success);
     }
   });
-  Object.defineProperty(this, 'getUserMedia', {
-    enumerable: true,
-    writable: true,
-    value: function value(options) {
-      var communication = _this.communication;
+};
 
-      return communication.getUserMedia(options);
-    }
-  });
+AccCore.getUserMedia = function (options) {
+  return OT.getUserMedia(options);
 };
 
 if (global === window) {

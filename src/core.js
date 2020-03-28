@@ -653,15 +653,16 @@ class AccCore {
     analytics.log(logAction.toggleRemoteVideo, logVariation.success);
   }
 
-  getUserMedia = (options) => {
-    const { communication } = this;
-    return communication.getUserMedia(options)
-  }
-
 }
+
+AccCore.getUserMedia = (options) => {
+  return OT.getUserMedia(options)
+}
+
 
 if (global === window) {
   window.AccCore = AccCore;
 }
 
 module.exports = AccCore;
+
