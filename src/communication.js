@@ -334,6 +334,9 @@ class Communication {
     subscriber[method](enable);
   }
 
+  getUserMedia = (options) => {
+    return  OT.getUserMedia(options);
+  }
 }
 
 export default Communication;

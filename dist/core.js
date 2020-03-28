@@ -242,7 +242,7 @@ var AccCore = function AccCore(options) {
 
 
 /**
- * Enable or disable local audio
+ * Enable or disable local audio\
  * @param {Boolean} enable
  */
 
@@ -913,6 +913,15 @@ var _initialiseProps = function _initialiseProps() {
       analytics.log(logAction.toggleRemoteVideo, logVariation.attempt);
       communication.enableRemoteAV(id, 'video', enable);
       analytics.log(logAction.toggleRemoteVideo, logVariation.success);
+    }
+  });
+  Object.defineProperty(this, 'getUserMedia', {
+    enumerable: true,
+    writable: true,
+    value: function value(options) {
+      var communication = _this.communication;
+
+      return communication.getUserMedia(options);
     }
   });
 };

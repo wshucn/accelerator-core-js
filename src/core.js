@@ -604,7 +604,7 @@ class AccCore {
   }
 
   /**
-   * Enable or disable local audio
+   * Enable or disable local audio\
    * @param {Boolean} enable
    */
   toggleLocalAudio = (enable) => {
@@ -651,6 +651,11 @@ class AccCore {
     analytics.log(logAction.toggleRemoteVideo, logVariation.attempt);
     communication.enableRemoteAV(id, 'video', enable);
     analytics.log(logAction.toggleRemoteVideo, logVariation.success);
+  }
+
+  getUserMedia = (options) => {
+    const { communication } = this;
+    return communication.getUserMedia(options)
   }
 
 }

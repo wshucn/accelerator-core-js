@@ -497,6 +497,13 @@ var _initialiseProps = function _initialiseProps() {
       subscriber[method](enable);
     }
   });
+  Object.defineProperty(this, 'getUserMedia', {
+    enumerable: true,
+    writable: true,
+    value: function value(options) {
+      return OT.getUserMedia(options);
+    }
+  });
 };
 
 exports.default = Communication;
