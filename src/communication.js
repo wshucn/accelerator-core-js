@@ -314,11 +314,12 @@ class Communication {
    * Enable/disable local audio or video
    * @param {String} source - 'audio' or 'video'
    * @param {Boolean} enable
+   * @param {String} streamSource - 'camera' or 'custom'
    */
-  enableLocalAV = (id, source, enable) => {
+  enableLocalAV = (id, source, enable, streamSource = 'camera') => {
     const method = `publish${properCase(source)}`;
     const { publishers } = this.state.getPubSub();
-    publishers.camera[id][method](enable);
+    publishers[streamSource][id][method](enable);
   }
 
   /**

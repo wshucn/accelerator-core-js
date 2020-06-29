@@ -133,6 +133,7 @@ var Communication = function Communication(options) {
  * Enable/disable local audio or video
  * @param {String} source - 'audio' or 'video'
  * @param {Boolean} enable
+ * @param {String} streamSource - 'camera' or 'custom'
  */
 
 
@@ -476,12 +477,14 @@ var _initialiseProps = function _initialiseProps() {
     enumerable: true,
     writable: true,
     value: function value(id, source, enable) {
+      var streamSource = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'camera';
+
       var method = 'publish' + properCase(source);
 
       var _state$getPubSub2 = _this.state.getPubSub(),
           publishers = _state$getPubSub2.publishers;
 
-      publishers.camera[id][method](enable);
+      publishers[streamSource][id][method](enable);
     }
   });
   Object.defineProperty(this, 'enableRemoteAV', {

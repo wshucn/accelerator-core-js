@@ -606,28 +606,28 @@ class AccCore {
   /**
    * Enable or disable local audio\
    * @param {Boolean} enable
-   * @param {String} source
+   * @param {String} streamSource, 'camera' or 'custom'
    */
-  toggleLocalAudio = (enable, source) => {
+  toggleLocalAudio = (enable, streamSource) => {
     const { analytics, internalState, communication } = this;
     analytics.log(logAction.toggleLocalAudio, logVariation.attempt);
     const { publishers } = internalState.getPubSub();
-    const toggleAudio = id => communication.enableLocalAV(id, 'audio', enable);
-    Object.keys(publishers[source]).forEach(toggleAudio);
+    const toggleAudio = id => communication.enableLocalAV(id, 'audio', enable, streamSource);
+    Object.keys(publishers[streamSource]).forEach(toggleAudio);
     analytics.log(logAction.toggleLocalAudio, logVariation.success);
   };
 
   /**
    * Enable or disable local video
    * @param {Boolean} enable
-   * @param {String} source
+   * @param {String} streamSource, 'camera' or 'custom'
    */
-  toggleLocalVideo = (enable, source) => {
+  toggleLocalVideo = (enable, streamSource) => {
     const { analytics, internalState, communication } = this;
     analytics.log(logAction.toggleLocalVideo, logVariation.attempt);
     const { publishers } = internalState.getPubSub();
-    const toggleVideo = id => communication.enableLocalAV(id, 'video', enable);
-    Object.keys(publishers[source]).forEach(toggleVideo);
+    const toggleVideo = id => communication.enableLocalAV(id, 'video', enable, streamSource);
+    Object.keys(publishers[streamSource]).forEach(toggleVideo);
     analytics.log(logAction.toggleLocalVideo, logVariation.success);
   };
 

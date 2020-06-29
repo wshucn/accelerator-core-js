@@ -244,14 +244,14 @@ var AccCore = function AccCore(options) {
 /**
  * Enable or disable local audio\
  * @param {Boolean} enable
- * @param {String} source
+ * @param {String} streamSource, 'camera' or 'custom'
  */
 
 
 /**
  * Enable or disable local video
  * @param {Boolean} enable
- * @param {String} source
+ * @param {String} streamSource, 'camera' or 'custom'
  */
 
 
@@ -856,7 +856,7 @@ var _initialiseProps = function _initialiseProps() {
   Object.defineProperty(this, 'toggleLocalAudio', {
     enumerable: true,
     writable: true,
-    value: function value(enable, source) {
+    value: function value(enable, streamSource) {
       var analytics = _this.analytics,
           internalState = _this.internalState,
           communication = _this.communication;
@@ -867,16 +867,16 @@ var _initialiseProps = function _initialiseProps() {
           publishers = _internalState$getPub.publishers;
 
       var toggleAudio = function toggleAudio(id) {
-        return communication.enableLocalAV(id, 'audio', enable);
+        return communication.enableLocalAV(id, 'audio', enable, streamSource);
       };
-      Object.keys(publishers[source]).forEach(toggleAudio);
+      Object.keys(publishers[streamSource]).forEach(toggleAudio);
       analytics.log(logAction.toggleLocalAudio, logVariation.success);
     }
   });
   Object.defineProperty(this, 'toggleLocalVideo', {
     enumerable: true,
     writable: true,
-    value: function value(enable, source) {
+    value: function value(enable, streamSource) {
       var analytics = _this.analytics,
           internalState = _this.internalState,
           communication = _this.communication;
@@ -887,9 +887,9 @@ var _initialiseProps = function _initialiseProps() {
           publishers = _internalState$getPub2.publishers;
 
       var toggleVideo = function toggleVideo(id) {
-        return communication.enableLocalAV(id, 'video', enable);
+        return communication.enableLocalAV(id, 'video', enable, streamSource);
       };
-      Object.keys(publishers[source]).forEach(toggleVideo);
+      Object.keys(publishers[streamSource]).forEach(toggleVideo);
       analytics.log(logAction.toggleLocalVideo, logVariation.success);
     }
   });
