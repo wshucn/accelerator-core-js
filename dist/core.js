@@ -244,12 +244,14 @@ var AccCore = function AccCore(options) {
 /**
  * Enable or disable local audio\
  * @param {Boolean} enable
+ * @param {String} source
  */
 
 
 /**
  * Enable or disable local video
  * @param {Boolean} enable
+ * @param {String} source
  */
 
 
@@ -854,7 +856,7 @@ var _initialiseProps = function _initialiseProps() {
   Object.defineProperty(this, 'toggleLocalAudio', {
     enumerable: true,
     writable: true,
-    value: function value(enable) {
+    value: function value(enable, source) {
       var analytics = _this.analytics,
           internalState = _this.internalState,
           communication = _this.communication;
@@ -867,14 +869,14 @@ var _initialiseProps = function _initialiseProps() {
       var toggleAudio = function toggleAudio(id) {
         return communication.enableLocalAV(id, 'audio', enable);
       };
-      Object.keys(publishers.camera).forEach(toggleAudio);
+      Object.keys(publishers[source]).forEach(toggleAudio);
       analytics.log(logAction.toggleLocalAudio, logVariation.success);
     }
   });
   Object.defineProperty(this, 'toggleLocalVideo', {
     enumerable: true,
     writable: true,
-    value: function value(enable) {
+    value: function value(enable, source) {
       var analytics = _this.analytics,
           internalState = _this.internalState,
           communication = _this.communication;
@@ -887,7 +889,7 @@ var _initialiseProps = function _initialiseProps() {
       var toggleVideo = function toggleVideo(id) {
         return communication.enableLocalAV(id, 'video', enable);
       };
-      Object.keys(publishers.camera).forEach(toggleVideo);
+      Object.keys(publishers[source]).forEach(toggleVideo);
       analytics.log(logAction.toggleLocalVideo, logVariation.success);
     }
   });

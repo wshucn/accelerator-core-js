@@ -606,26 +606,28 @@ class AccCore {
   /**
    * Enable or disable local audio\
    * @param {Boolean} enable
+   * @param {String} source
    */
-  toggleLocalAudio = (enable) => {
+  toggleLocalAudio = (enable, source) => {
     const { analytics, internalState, communication } = this;
     analytics.log(logAction.toggleLocalAudio, logVariation.attempt);
     const { publishers } = internalState.getPubSub();
     const toggleAudio = id => communication.enableLocalAV(id, 'audio', enable);
-    Object.keys(publishers.camera).forEach(toggleAudio);
+    Object.keys(publishers[source]).forEach(toggleAudio);
     analytics.log(logAction.toggleLocalAudio, logVariation.success);
   };
 
   /**
    * Enable or disable local video
    * @param {Boolean} enable
+   * @param {String} source
    */
-  toggleLocalVideo = (enable) => {
+  toggleLocalVideo = (enable, source) => {
     const { analytics, internalState, communication } = this;
     analytics.log(logAction.toggleLocalVideo, logVariation.attempt);
     const { publishers } = internalState.getPubSub();
     const toggleVideo = id => communication.enableLocalAV(id, 'video', enable);
-    Object.keys(publishers.camera).forEach(toggleVideo);
+    Object.keys(publishers[source]).forEach(toggleVideo);
     analytics.log(logAction.toggleLocalVideo, logVariation.success);
   };
 
