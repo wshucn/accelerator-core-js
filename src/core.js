@@ -573,6 +573,11 @@ class AccCore {
    */
   getSubscribersForStream = stream => this.getSession().getSubscribersForStream(stream);
 
+  /**
+   * Update the call properties for a publisher
+   * @properties {Object} properties - An call properties object
+   */
+  updateCallProperties = properties => this.communication.updateCallProperties(properties);
 
   /**
    * Send a signal using the OpenTok signaling apiKey

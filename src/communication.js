@@ -335,9 +335,15 @@ class Communication {
     subscriber[method](enable);
   }
 
-  getUserMedia = (options) => {
-    return  OT.getUserMedia(options);
-  }
+  getUserMedia = (options) => OT.getUserMedia(options);
+
+  /**
+   * Update the call properties for a publisher
+   * @properties {Object} properties - An call properties object
+   */
+  updateCallProperties = (properties) => {
+    this.callProperties = Object.assign({}, this.callProperties, properties);
+  };
 }
 
 export default Communication;

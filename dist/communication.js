@@ -143,6 +143,12 @@ var Communication = function Communication(options) {
  * @param {String} source - 'audio' or 'video'
  * @param {Boolean} enable
  */
+
+
+/**
+ * Update the call properties for a publisher
+ * @properties {Object} properties - An call properties object
+ */
 ;
 
 var _initialiseProps = function _initialiseProps() {
@@ -505,6 +511,13 @@ var _initialiseProps = function _initialiseProps() {
     writable: true,
     value: function value(options) {
       return OT.getUserMedia(options);
+    }
+  });
+  Object.defineProperty(this, 'updateCallProperties', {
+    enumerable: true,
+    writable: true,
+    value: function value(properties) {
+      _this.callProperties = Object.assign({}, _this.callProperties, properties);
     }
   });
 };

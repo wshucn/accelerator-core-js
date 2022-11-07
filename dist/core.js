@@ -233,6 +233,12 @@ var AccCore = function AccCore(options) {
 
 
 /**
+ * Update the call properties for a publisher
+ * @properties {Object} properties - An call properties object
+ */
+
+
+/**
  * Send a signal using the OpenTok signaling apiKey
  * @param {String} type
  * @param {*} [data]
@@ -827,6 +833,13 @@ var _initialiseProps = function _initialiseProps() {
     writable: true,
     value: function value(stream) {
       return _this.getSession().getSubscribersForStream(stream);
+    }
+  });
+  Object.defineProperty(this, 'updateCallProperties', {
+    enumerable: true,
+    writable: true,
+    value: function value(properties) {
+      return _this.communication.updateCallProperties(properties);
     }
   });
   Object.defineProperty(this, 'signal', {
